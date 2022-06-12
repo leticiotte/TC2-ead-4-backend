@@ -2,14 +2,15 @@ const router = require("express").Router();
 
 const Order = require("../models/Order");
 const Product = require("../models/Product");
+const validator = require("../assets/validators");
 
 router.post("/", async (req, res) => {
   if (Object.keys(req.body).length === 0) {
     res.status(400).json({ error: "Missing body" });
     return;
   }
-  const params = ["name", "brand", "size", "price"];
-  const { name, brand, size, price } = req.body;
+  const params = ["name", "brand", "size", "price", "url"];
+  const { name, brand, size, price, url } = req.body;
   for (const param of params) {
     if (!req.body.hasOwnProperty(param)) {
       res.status(400).json({ error: `missing body attribute ${param}` });
@@ -23,6 +24,7 @@ router.post("/", async (req, res) => {
     brand,
     size,
     price,
+    url,
     creationTimestamp: `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`,
   };
   try {
@@ -74,8 +76,8 @@ router.patch("/:id", async (req, res) => {
     return;
   }
 
-  const params = ["name", "brand", "size", "price"];
-  const { name, brand, size, price } = req.body;
+  const params = ["name", "brand", "size", "price", "url"];
+  const { name, brand, size, price, url } = req.body;
   for (const param of params) {
     if (!req.body.hasOwnProperty(param)) {
       res.status(400).json({ error: `missing body attribute ${param}` });
@@ -89,6 +91,7 @@ router.patch("/:id", async (req, res) => {
     brand,
     size,
     price,
+    url,
     updatedTimestamp: `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`,
   };
 
@@ -101,6 +104,7 @@ router.patch("/:id", async (req, res) => {
           brand: product.brand,
           size: product.size,
           price: product.price,
+          url: product.url,
           updatedTimestamp: product.updatedTimestamp,
         },
       }

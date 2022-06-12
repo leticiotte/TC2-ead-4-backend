@@ -175,12 +175,63 @@ router.get("/:id/orders", async (req, res) => {
   }
 
   try {
-    const order = await Order.find({ userId: id });
-    if (!order) {
-      res.status(404).json();
-      return;
+    const pipeline = [
+      {
+        $match: { userId: id },
+      },
+      {
+        $lookup: {
+          from: "products",
+          as: "productName",
+          let: {
+            id: { $toObjectId: "$productId" },
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", "$$id"],
+                },
+              },
+            },
+            {
+              $project: {
+                name: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $unwind: {
+          path: "$products",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          productId: 1,
+          productName: 1,
+          userId: 1,
+          quantity: 1,
+          zipCode: 1,
+          streetNumber: 1,
+          creationTimestamp: 1,
+          totalValue: 1,
+          complement: 1,
+          updatedTimestamp: 1,
+          totalValue: 1,
+        },
+      },
+    ];
+
+    let orders = await Order.aggregate(pipeline);
+    for (let i = 0; i < orders.length; i++) {
+      orders[i].productName = orders[i].productName[0].name;
     }
-    res.status(200).json({ order });
+
+    res.status(200).json({ orders });
   } catch (error) {
     res.status(500).json({ error: error });
   }
