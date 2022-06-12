@@ -137,7 +137,8 @@ router.delete("/:id", async (req, res) => {
   }
 
   const order = await Order.find({ productId: id });
-  if (order) {
+  console.log(order);
+  if (order.length > 0) {
     res.status(400).json({
       displayMessage: "Esse produto não pode ser excluído pois já foi comprado",
     });
