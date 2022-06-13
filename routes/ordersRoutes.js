@@ -70,12 +70,54 @@ router.get("/:id", async (req, res) => {
     return;
   }
   try {
-    const order = await Order.findOne({ _id: id });
-    if (!order) {
+    const pipeline = [
+      {
+        $match: {
+          $expr: { $eq: ["$_id", { $toObjectId: id }] },
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          as: "productName",
+          let: {
+            id: { $toObjectId: "$productId" },
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", "$$id"],
+                },
+              },
+            },
+            {
+              $project: {
+                name: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        $unwind: {
+          path: "$products",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+    ];
+
+    const orders = await Order.aggregate(pipeline);
+    if (orders.length < 1) {
       res.status(404).json();
       return;
     }
-    res.status(200).json({ order });
+
+    for (let i = 0; i < orders.length; i++) {
+      orders[i].productName = orders[i].productName[0].name;
+    }
+
+    res.status(200).json({ order: orders[0] });
   } catch (error) {
     res.status(500).json({ error: error });
   }
