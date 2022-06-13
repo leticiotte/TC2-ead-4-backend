@@ -18,14 +18,15 @@ router.post("/", async (req, res) => {
     }
   }
 
-  const date = new Date();
   const product = {
     name,
     brand,
     size,
     price,
     url,
-    creationTimestamp: `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`,
+    creationTimestamp: `${new Date().toLocaleDateString(
+      "br-BR"
+    )}, ${new Date().toLocaleTimeString("br-BR")}`,
   };
   try {
     await Product.create(product);
@@ -85,14 +86,15 @@ router.patch("/:id", async (req, res) => {
     }
   }
 
-  const date = new Date();
   const product = {
     name,
     brand,
     size,
     price,
     url,
-    updatedTimestamp: `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`,
+    updatedTimestamp: `${new Date().toLocaleDateString(
+      "br-BR"
+    )}, ${new Date().toLocaleTimeString("br-BR")}`,
   };
 
   try {

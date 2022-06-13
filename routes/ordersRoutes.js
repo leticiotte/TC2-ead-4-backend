@@ -38,7 +38,9 @@ router.post("/", async (req, res) => {
     quantity,
     zipCode,
     streetNumber,
-    creationTimestamp: `${new Date().toLocaleDateString()}, ${new Date().toLocaleTimeString()}`,
+    creationTimestamp: `${new Date().toLocaleDateString(
+      "br-BR"
+    )}, ${new Date().toLocaleTimeString("br-BR")}`,
     totalValue: product.price * quantity,
     complement,
   };
@@ -117,7 +119,6 @@ router.patch("/:id", async (req, res) => {
     return;
   }
 
-  const date = new Date();
   const order = {
     productId,
     userId,
@@ -126,7 +127,9 @@ router.patch("/:id", async (req, res) => {
     streetNumber,
     totalValue: product.price * quantity,
     complement,
-    updatedTimestamp: `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`,
+    updatedTimestamp: `${new Date().toLocaleDateString(
+      "br-BR"
+    )}, ${new Date().toLocaleTimeString("br-BR")}`,
   };
 
   try {
