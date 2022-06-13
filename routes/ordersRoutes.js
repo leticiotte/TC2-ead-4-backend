@@ -39,8 +39,8 @@ router.post("/", async (req, res) => {
     zipCode,
     streetNumber,
     creationTimestamp: `${new Date().toLocaleDateString(
-      "br-BR"
-    )}, ${new Date().toLocaleTimeString("br-BR")}`,
+      "pt-br"
+    )}, ${new Date().toLocaleTimeString("pt-br")}`,
     totalValue: product.price * quantity,
     complement,
   };
@@ -128,8 +128,8 @@ router.patch("/:id", async (req, res) => {
     totalValue: product.price * quantity,
     complement,
     updatedTimestamp: `${new Date().toLocaleDateString(
-      "br-BR"
-    )}, ${new Date().toLocaleTimeString("br-BR")}`,
+      "pt-br"
+    )}, ${new Date().toLocaleTimeString("pt-br")}`,
   };
 
   try {

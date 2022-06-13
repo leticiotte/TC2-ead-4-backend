@@ -25,8 +25,8 @@ router.post("/", async (req, res) => {
     price,
     url,
     creationTimestamp: `${new Date().toLocaleDateString(
-      "br-BR"
-    )}, ${new Date().toLocaleTimeString("br-BR")}`,
+      "pt-br"
+    )}, ${new Date().toLocaleTimeString("pt-br")}`,
   };
   try {
     await Product.create(product);
@@ -93,8 +93,8 @@ router.patch("/:id", async (req, res) => {
     price,
     url,
     updatedTimestamp: `${new Date().toLocaleDateString(
-      "br-BR"
-    )}, ${new Date().toLocaleTimeString("br-BR")}`,
+      "pt-br"
+    )}, ${new Date().toLocaleTimeString("pt-br")}`,
   };
 
   try {

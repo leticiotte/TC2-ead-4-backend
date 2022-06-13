@@ -23,8 +23,8 @@ router.post("/", async (req, res) => {
     cpf,
     password,
     creationTimestamp: `${new Date().toLocaleDateString(
-      "br-BR"
-    )}, ${new Date().toLocaleTimeString("br-BR")}`,
+      "pt-br"
+    )}, ${new Date().toLocaleTimeString("pt-br")}`,
   };
   try {
     const userCreated = await User.create(user);
@@ -91,8 +91,8 @@ router.patch("/:id", async (req, res) => {
     name,
     cpf,
     updatedTimestamp: `${new Date().toLocaleDateString(
-      "br-BR"
-    )}, ${new Date().toLocaleTimeString("br-BR")}`,
+      "pt-br"
+    )}, ${new Date().toLocaleTimeString("pt-br")}`,
   };
 
   try {
