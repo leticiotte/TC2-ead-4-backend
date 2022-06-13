@@ -32,14 +32,13 @@ router.post("/", async (req, res) => {
     return;
   }
 
-  const date = new Date();
   const order = {
     productId,
     userId,
     quantity,
     zipCode,
     streetNumber,
-    creationTimestamp: `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`,
+    creationTimestamp: `${new Date().toLocaleDateString()}, ${new Date().toLocaleTimeString()}`,
     totalValue: product.price * quantity,
     complement,
   };

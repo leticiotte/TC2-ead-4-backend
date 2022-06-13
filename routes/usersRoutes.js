@@ -26,8 +26,9 @@ router.post("/", async (req, res) => {
     creationTimestamp: `${date.toLocaleDateString()}, ${date.toLocaleTimeString()}`,
   };
   try {
-    await User.create(user);
-    res.status(201).json();
+    const userCreated = await User.create(user);
+    console.log(userCreated);
+    res.status(200).json({ user: { _id: userCreated._id } });
   } catch (error) {
     res.status(500).json({ error: error });
   }
